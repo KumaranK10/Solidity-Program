@@ -1,0 +1,42 @@
+//SPDX-License-Identifier: MIT
+
+pragma solidity 0.8.15;
+
+contract MappingStructExample {
+    struct Transaction{
+        uint amount;
+        uint timestamp;
+    }
+    struct Balance {
+        uint totalBalance;
+        uint numDeposits;
+        mapping (uint => Transaction) deposits;
+        uint numWithdrawls;
+        mapping (uint => Transaction) withdrawls;
+    }
+    mapping (address => Balance) public balanceReceived;
+
+    function gatBalance(address Address) public view returns(uint){
+        return balanceReceived[Address].totalBalance;
+    }
+
+    function depositMoney() public payable {
+
+        balanceReceived[msg.sender].totalBalance += msg.value;
+
+        Transaction memory deposits = Transaction(msg.value , block.timestamp);
+        balanceReceived[msg.sender].deposits[balanceReceived[msg.sender].numDeposits] = deposits;
+        balanceReceived[msg.sender].numDeposits++;
+    }
+
+    function Withdrawals( address payable to, uint Amount) public payable {
+        balanceReceived[msg.sender].totalBalance -= Amount;
+
+        Transaction memory withdrawls = Transaction (msg.value , block.timestamp);
+        balanceReceived[msg.sender].withdrawls[balanceReceived[msg.sender].numWithdrawls] = withdrawls;
+        balanceReceived[msg.sender].numWithdrawls++;
+        
+        to.transfer(Amount);
+
+    }
+}
