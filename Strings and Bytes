@@ -1,0 +1,18 @@
+//SPDX-License-Identifier:MIT
+pragma solidity 0.8.14;
+ contract ExampleStrings{
+     string public Mystring="Hello World";
+     bytes public Mybytes=unicode"Hello World";
+     function updatestring(string memory MyString)public{
+         Mystring=MyString;
+     }
+
+     function ChecktwoString(string memory MyString) public view returns(bool){
+         return keccak256(abi.encodePacked(Mystring)) == keccak256(abi.encodePacked(MyString));//here we compared two strings and two strings are not compared here only the bytes(hash value)is compared.
+     }
+
+     function getlength() public view returns(uint){
+         return Mybytes.length;//it is used to get length of bytes
+     }
+ }
+ 
