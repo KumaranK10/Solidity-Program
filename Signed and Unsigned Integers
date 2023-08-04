@@ -1,0 +1,18 @@
+//SPDX-License-Identifier:MIT
+pragma solidity 0.8.14;
+contract exampleUint{
+  uint16 public Value=65534;
+  int public Int=-6;
+
+  function updateInt(int Upint)public{
+      Int=Upint;
+  }
+
+  function increementUint() public{
+      Value++;
+  }
+
+  function incrementInt() public{
+      Int++;
+  }
+}
